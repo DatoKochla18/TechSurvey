@@ -35,3 +35,22 @@ and Experience not like N'%არ%'
 group by Experience
 having count(*)>1
 order by salary desc
+
+
+--Work hours by Age
+SELECT Age,AVG(dbo.AVGWorkHour(AverageMonthlyWorkHours)) as work_hours from techdata
+WHERE AverageMonthlyWorkHours like '%-%' and Age like '%[0-9]%'
+group by Age
+order by Age
+
+--Gender Analysis
+
+select * from (
+select Sex,Category,count(*) as num  from techdata
+where Sex not like N'%არ%' and Category is not null and Category not like N'%არ%'
+group by Sex,Category
+having count(*) >10
+
+)as t
+Pivot( sum(num)
+	for Sex in ([მამრობითი],[მდედრობითი]))as pvt
